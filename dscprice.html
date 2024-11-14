@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product & Services Selection</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 1s ease-in-out;
+    }
+    .price-tag {
+      font-size: 20px;
+      color: #ffffff;
+      background-color: #007bff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .price-tag:hover {
+      background-color: #0056b3;
+      transform: scale(1.1);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    select, button {
+      transition: transform 0.3s ease;
+    }
+    select:focus, button:focus {
+      transform: scale(1.05);
+    }
+    .text-center {
+      margin-top: 20px;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.1);
+      border-top: 1px solid #007bff;
+      margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      .price-tag {
+        font-size: 18px;
+        padding: 8px 16px;
+      }
+    }
+    @media (max-width: 576px) {
+      .container {
+        padding: 10px;
+      }
+      .price-tag {
+        font-size: 16px;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <form>
+    <h5 class="text-center mb-4">Please Select Our Product & Services</h5>
+    
+    <!-- User Type -->
+    <div class="form-group">
+      <label for="userType">User Type*</label>
+      <select id="userType" class="form-control" onchange="calculatePrice()">
+        <option value="Individual">Individual</option>
+        <option value="Organization">Organization</option>
+        <option value="Foreign">Foreign</option>
+      </select>
+    </div>
+
+    <!-- Class Type -->
+    <div class="form-group">
+      <label for="classType">Class Type*</label>
+      <select id="classType" class="form-control" onchange="calculatePrice()">
+        <option value="Class III">Class III</option>
+        <option value="Class II">Class II</option>
+      </select>
+    </div>
+
+    <!-- Certificate Type -->
+    <div class="form-group">
+      <label for="certificateType">Certificate Type*</label>
+      <select id="certificateType" class="form-control" onchange="calculatePrice()">
+        <option value="Signing">Signing</option>
+        <option value="Encryption">Encryption</option>
+        <option value="Combo Signing & Encryption">Combo Signing & Encryption</option>
+      </select>
+    </div>
+
+    <!-- Validity -->
+    <div class="form-group">
+      <label for="validity">Validity*</label>
+      <select id="validity" class="form-control" onchange="calculatePrice()">
+        <option value="1 Year">1 Year</option>
+        <option value="2 Years">2 Years</option>
+        <option value="3 Years">3 Years</option>
+      </select>
+    </div>
+
+    <!-- Token Type -->
+    <div class="form-group">
+      <label for="tokenType">Token Type</label>
+      <select id="tokenType" class="form-control" onchange="calculatePrice()">
+        <option value="Not Required">Not Required</option>
+        <option value="Required">Required</option>
+      </select>
+    </div>
+
+    <!-- Assisted Service -->
+    <div class="form-group">
+      <label for="assistedService">Assisted Service</label>
+      <select id="assistedService" class="form-control" onchange="calculatePrice()">
+        <option value="Not Required">Not Required</option>
+        <option value="Required">Required</option>
+      </select>
+    </div>
+
+    <!-- Price Display -->
+    <div class="text-center">
+      <span id="price" class="price-tag animate__animated animate__pulse">Price: ₹0</span>
+    </div>
+  </form>
+</div>
+
+<footer>
+  &copy; 2024 Click and Secure. All rights reserved.
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+  const pricingData = {
+    "Individual": {
+      "Class III": {
+        "Signing": { "1 Year": 500, "2 Years": 900, "3 Years": 1200 },
+        "Encryption": { "1 Year": 550, "2 Years": 950, "3 Years": 1250 },
+        "Combo Signing & Encryption": { "1 Year": 1000, "2 Years": 1800, "3 Years": 2400 }
+      },
+      "Class II": {
+        "Signing": { "1 Year": 400, "2 Years": 800, "3 Years": 1100 },
+        "Encryption": { "1 Year": 450, "2 Years": 850, "3 Years": 1150 },
+        "Combo Signing & Encryption": { "1 Year": 900, "2 Years": 1700, "3 Years": 2300 }
+      }
+    },
+    "Organization": {
+      "Class III": {
+        "Signing": { "1 Year": 600, "2 Years": 1100, "3 Years": 1400 },
+        "Encryption": { "1 Year": 650, "2 Years": 1150, "3 Years": 1450 },
+        "Combo Signing & Encryption": { "1 Year": 1200, "2 Years": 2000, "3 Years": 2600 }
+      },
+      "Class II": {
+        "Signing": { "1 Year": 500, "2 Years": 1000, "3 Years": 1300 },
+        "Encryption": { "1 Year": 550, "2 Years": 1050, "3 Years": 1350 },
+        "Combo Signing & Encryption": { "1 Year": 1100, "2 Years": 1900, "3 Years": 2500 }
+      }
+    },
+    "Foreign": {
+      "Class III": {
+        "Signing": { "1 Year": 700, "2 Years": 1200, "3 Years": 1500 },
+        "Encryption": { "1 Year": 750, "2 Years": 1250, "3 Years": 1550 },
+        "Combo Signing & Encryption": { "1 Year": 1300, "2 Years": 2200, "3 Years": 2800 }
+      },
+      "Class II": {
+        "Signing": { "1 Year": 600, "2 Years": 1100, "3 Years": 1400 },
+        "Encryption": { "1 Year": 650, "2 Years": 1150, "3 Years": 1450 },
+        "Combo Signing & Encryption": { "1 Year": 1200, "2 Years": 2000, "3 Years": 2600 }
+      }
+    }
+  };
+
+  const tokenPrice = 349;
+  const assistedServicePrice = 399;
+
+  function calculatePrice() {
+    const userType = document.getElementById('userType').value;
+    const classType = document.getElementById('classType').value;
+    const certificateType = document.getElementById('certificateType').value;
+    const validity = document.getElementById('validity').value;
+    const tokenType = document.getElementById('tokenType').value;
+    const assistedService = document.getElementById('assistedService').value;
+
+    let price = 0;
+    try {
+      price = pricingData[userType][classType][certificateType][validity];
+    } catch (error) {
+      console.warn("Selected combination not available in pricing data");
+    }
+
+    if (tokenType === "Required") {
+      price += tokenPrice;
+    }
+    if (assistedService === "Required") {
+      price += assistedServicePrice;
+    }
+
+    document.getElementById('price').innerText = 'Price: ₹' + (price || 0);
+    document.getElementById('price').classList.add('animate__animated', 'animate__pulse');
+  }
+</script>
+
+</body>
+</html>
